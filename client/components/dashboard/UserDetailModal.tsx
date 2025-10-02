@@ -197,9 +197,14 @@ const UserDetailModal = ({ user, open, onOpenChange }: UserDetailModalProps) => 
                         size="sm"
                         className="rounded-xl text-muted-foreground"
                         onClick={() => {
-                          if (!navigator.clipboard) return;
-                          navigator.clipboard.writeText(message);
-                          toast.success("Message copied to clipboard");
+                          if (!navigator?.clipboard) {
+                            toast.error("Clipboard access is unavailable");
+                            return;
+                          }
+                          navigator.clipboard
+                            .writeText(message)
+                            .then(() => toast.success("Message copied to clipboard"))
+                            .catch(() => toast.error("Unable to copy message"));
                         }}
                       >
                         Copy message
