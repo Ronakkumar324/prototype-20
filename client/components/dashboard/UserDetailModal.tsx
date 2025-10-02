@@ -15,7 +15,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { buildUpgradeMessage, UpsellUserWithScore } from "@/lib/upsellLogic";
-import { cn } from "@/lib/utils";
 import { Mail, Rocket, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 
