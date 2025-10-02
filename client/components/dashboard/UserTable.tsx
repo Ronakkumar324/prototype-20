@@ -38,14 +38,21 @@ const UserTable = ({ users, onSelect }: UserTableProps) => {
         <div>
           <h3 className="text-lg font-semibold">User Upsell Pipeline</h3>
           <p className="text-sm text-muted-foreground">
-            Ranked by AI signals combining usage depth, team expansion, and automation demand.
+            Ranked by AI signals combining usage depth, team expansion, and
+            automation demand.
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Badge variant="outline" className="rounded-full border-primary/20 bg-primary/10 text-xs font-medium text-primary">
+          <Badge
+            variant="outline"
+            className="rounded-full border-primary/20 bg-primary/10 text-xs font-medium text-primary"
+          >
             {users.filter((user) => user.priority === "Hot").length} hot leads
           </Badge>
-          <Badge variant="outline" className="rounded-full border border-border/80 bg-muted/30 text-xs font-medium text-muted-foreground">
+          <Badge
+            variant="outline"
+            className="rounded-full border border-border/80 bg-muted/30 text-xs font-medium text-muted-foreground"
+          >
             Tap a row to open details
           </Badge>
         </div>
@@ -71,14 +78,21 @@ const UserTable = ({ users, onSelect }: UserTableProps) => {
             >
               <TableCell>
                 <div className="flex flex-col">
-                  <span className="font-semibold text-foreground">{user.name}</span>
+                  <span className="font-semibold text-foreground">
+                    {user.name}
+                  </span>
                   <span className="text-xs text-muted-foreground">
                     {user.title} · {user.company}
                   </span>
                 </div>
               </TableCell>
               <TableCell>
-                <Badge className={cn("rounded-full px-3 py-1 text-xs font-semibold", planStyles[user.plan])}>
+                <Badge
+                  className={cn(
+                    "rounded-full px-3 py-1 text-xs font-semibold",
+                    planStyles[user.plan],
+                  )}
+                >
                   {user.plan}
                 </Badge>
               </TableCell>
@@ -103,14 +117,22 @@ const UserTable = ({ users, onSelect }: UserTableProps) => {
                       {Math.round(user.metrics.aiAssistUsage * 100)}% AI
                     </span>
                   </div>
-                  <Progress value={user.upsellScore * 10} className="h-2 rounded-full" />
+                  <Progress
+                    value={user.upsellScore * 10}
+                    className="h-2 rounded-full"
+                  />
                 </div>
               </TableCell>
               <TableCell className="hidden xl:table-cell text-sm text-muted-foreground">
                 {user.lastActive}
               </TableCell>
               <TableCell className="hidden md:table-cell">
-                <Badge className={cn("rounded-full px-3 py-1 text-xs font-semibold", priorityTokens[user.priority])}>
+                <Badge
+                  className={cn(
+                    "rounded-full px-3 py-1 text-xs font-semibold",
+                    priorityTokens[user.priority],
+                  )}
+                >
                   {user.priority}
                 </Badge>
               </TableCell>
@@ -132,7 +154,8 @@ const UserTable = ({ users, onSelect }: UserTableProps) => {
           ))}
         </TableBody>
         <TableCaption className="px-6 text-left">
-          Use the AI composer inside each record to deliver targeted premium upgrade outreach.
+          Use the AI composer inside each record to deliver targeted premium
+          upgrade outreach.
         </TableCaption>
       </Table>
     </div>

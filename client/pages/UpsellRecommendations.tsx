@@ -1,5 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import AppLayout from "@/layouts/AppLayout";
 import { BrainCircuit, Send } from "lucide-react";
 
@@ -17,12 +23,16 @@ const UpsellRecommendations = () => {
               <CardTitle className="text-xl">Personalized playbooks</CardTitle>
             </div>
             <CardDescription>
-              Soon you will be able to orchestrate AI-driven upsell journeys, layered with touchpoints across email, in-app, and CSM collaboration.
+              Soon you will be able to orchestrate AI-driven upsell journeys,
+              layered with touchpoints across email, in-app, and CSM
+              collaboration.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4 text-sm text-muted-foreground">
             <p>
-              Prepare a list of plays, experiments, and content modules you would like to automate. Fusion can then build the full recommendation engine when you are ready.
+              Prepare a list of plays, experiments, and content modules you
+              would like to automate. Fusion can then build the full
+              recommendation engine when you are ready.
             </p>
             <Button
               size="lg"
@@ -38,11 +48,13 @@ const UpsellRecommendations = () => {
           <CardHeader>
             <CardTitle className="text-xl">Need something else?</CardTitle>
             <CardDescription>
-              Want this page to power dynamic recommendations from your data warehouse or CRM? Provide the specs and we will wire it up.
+              Want this page to power dynamic recommendations from your data
+              warehouse or CRM? Provide the specs and we will wire it up.
             </CardDescription>
           </CardHeader>
           <CardContent className="text-sm text-muted-foreground">
-            This placeholder keeps the navigation consistent while you finalize the broader upsell strategy requirements.
+            This placeholder keeps the navigation consistent while you finalize
+            the broader upsell strategy requirements.
           </CardContent>
         </Card>
       </div>

@@ -58,7 +58,9 @@ const SidebarContent = ({ onNavigate }: SidebarContentProps) => {
           <Sparkles className="h-5 w-5" />
         </div>
         <div>
-          <p className="text-sm uppercase tracking-wider text-white/60">Upsell IQ</p>
+          <p className="text-sm uppercase tracking-wider text-white/60">
+            Upsell IQ
+          </p>
           <h2 className="text-lg font-semibold text-white">Admin Studio</h2>
         </div>
       </div>
@@ -114,7 +116,8 @@ const SidebarContent = ({ onNavigate }: SidebarContentProps) => {
         <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-4 text-white shadow-subtle">
           <p className="text-sm font-semibold">Playbook Spotlight</p>
           <p className="mt-2 text-xs text-white/70">
-            Orchestrate AI-driven upgrade campaigns and watch premium conversions grow.
+            Orchestrate AI-driven upgrade campaigns and watch premium
+            conversions grow.
           </p>
           <Button
             variant="secondary"
@@ -133,15 +136,29 @@ const SidebarContent = ({ onNavigate }: SidebarContentProps) => {
   );
 };
 
-const MobileSidebar = ({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) => (
+const MobileSidebar = ({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) => (
   <Sheet open={open} onOpenChange={onOpenChange}>
-    <SheetContent side="left" className="w-[320px] border-r-0 bg-sidebar p-0 text-sidebar-foreground">
+    <SheetContent
+      side="left"
+      className="w-[320px] border-r-0 bg-sidebar p-0 text-sidebar-foreground"
+    >
       <SidebarContent onNavigate={() => onOpenChange(false)} />
     </SheetContent>
   </Sheet>
 );
 
-const AppLayout = ({ title, description, children, headerSlot }: AppLayoutProps) => {
+const AppLayout = ({
+  title,
+  description,
+  children,
+  headerSlot,
+}: AppLayoutProps) => {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -179,9 +196,13 @@ const AppLayout = ({ title, description, children, headerSlot }: AppLayoutProps)
                     <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                       {activeNavLabel}
                     </p>
-                    <h1 className="text-xl font-semibold tracking-tight md:text-2xl">{title}</h1>
+                    <h1 className="text-xl font-semibold tracking-tight md:text-2xl">
+                      {title}
+                    </h1>
                     {description ? (
-                      <p className="text-sm text-muted-foreground">{description}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {description}
+                      </p>
                     ) : null}
                   </div>
                 </div>
@@ -202,13 +223,19 @@ const AppLayout = ({ title, description, children, headerSlot }: AppLayoutProps)
                         className="h-10 rounded-xl border border-border/60 bg-muted/40 pl-9 text-sm text-foreground placeholder:text-muted-foreground/80 focus-visible:ring-2 focus-visible:ring-primary/60"
                       />
                     </div>
-                    <Button variant="outline" size="sm" className="rounded-lg border-border/80 bg-white/60 shadow-sm hover:bg-white">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="rounded-lg border-border/80 bg-white/60 shadow-sm hover:bg-white"
+                    >
                       <Users className="mr-2 h-4 w-4" />
                       Invite team
                     </Button>
                   </div>
                   <Avatar className="hidden h-10 w-10 rounded-xl md:block">
-                    <AvatarFallback className="bg-primary/10 text-primary">AB</AvatarFallback>
+                    <AvatarFallback className="bg-primary/10 text-primary">
+                      AB
+                    </AvatarFallback>
                   </Avatar>
                 </div>
               </div>
@@ -220,7 +247,11 @@ const AppLayout = ({ title, description, children, headerSlot }: AppLayoutProps)
                     className="h-10 rounded-xl border border-border/60 bg-muted/50 pl-9 text-sm placeholder:text-muted-foreground/80 focus-visible:ring-2 focus-visible:ring-primary/60"
                   />
                 </div>
-                <Button variant="outline" size="icon" className="h-10 w-10 rounded-xl border-border/80 bg-white/80 shadow-sm">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-10 w-10 rounded-xl border-border/80 bg-white/80 shadow-sm"
+                >
                   <Bell className="h-5 w-5 text-primary" />
                   <span className="sr-only">Notifications</span>
                 </Button>
@@ -228,7 +259,9 @@ const AppLayout = ({ title, description, children, headerSlot }: AppLayoutProps)
               {headerSlot}
             </div>
           </header>
-          <main className="flex-1 px-4 pb-10 pt-6 md:px-8 md:pt-8">{children}</main>
+          <main className="flex-1 px-4 pb-10 pt-6 md:px-8 md:pt-8">
+            {children}
+          </main>
         </div>
       </div>
     </div>

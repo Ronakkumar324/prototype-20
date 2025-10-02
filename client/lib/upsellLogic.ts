@@ -61,7 +61,10 @@ export const attachUpsellScore = (users: UpsellUser[]): UpsellUserWithScore[] =>
 export const getSummarySnapshot = (users: UpsellUserWithScore[]) => {
   const totalUsers = users.length;
   const upsellCandidates = users.filter((user) => user.upsellScore >= 7.5);
-  const totalFeatureDepth = users.reduce((acc, user) => acc + user.metrics.featureDepth, 0);
+  const totalFeatureDepth = users.reduce(
+    (acc, user) => acc + user.metrics.featureDepth,
+    0,
+  );
   const averageFeatureAdoption =
     totalUsers > 0 ? Math.round((totalFeatureDepth / totalUsers) * 100) : 0;
 
@@ -80,7 +83,10 @@ export const deriveFeatureAdoption = (users: UpsellUserWithScore[]) => {
 
   users.forEach((user) => {
     user.features.forEach((feature) => {
-      featureMap.set(feature.name, (featureMap.get(feature.name) ?? 0) + feature.frequency);
+      featureMap.set(
+        feature.name,
+        (featureMap.get(feature.name) ?? 0) + feature.frequency,
+      );
     });
   });
 
@@ -102,7 +108,8 @@ export const buildUpgradeMessage = (user: UpsellUserWithScore) => {
   const opener = `Hi ${user.name.split(" ")[0]},`;
   const highlight = `I noticed your team engages with ${user.features[0]?.name ?? "our advanced features"} ${user.features[0]?.frequency ?? "frequently"} times per month.`;
   const offer = `Based on your ${Math.round(user.metrics.aiAssistUsage * 100)}% AI adoption, our ${user.preferredUpgrade} plan unlocks deeper automation and concierge rollout support.`;
-  const closer = "Let me know a good time this week to walkthrough an upgrade preview.";
+  const closer =
+    "Let me know a good time this week to walkthrough an upgrade preview.";
 
   return `${opener}\n\n${highlight}\n${offer}\n\n${closer}`;
 };

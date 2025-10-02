@@ -59,7 +59,14 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+        sans: [
+          "Inter",
+          "ui-sans-serif",
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "sans-serif",
+        ],
       },
       boxShadow: {
         subtle: "0 18px 38px -24px rgba(15, 23, 42, 0.25)",
@@ -67,8 +74,10 @@ export default {
         "glow-md": "0 28px 60px -30px rgba(59, 130, 246, 0.5)",
       },
       backgroundImage: {
-        "soft-radial": "radial-gradient(ellipse at top, hsl(var(--primary) / 0.18), transparent 65%)",
-        "card-gradient": "linear-gradient(135deg, rgba(59, 130, 246, 0.18) 0%, rgba(14, 165, 233, 0.08) 48%, rgba(59, 130, 246, 0.05) 100%)",
+        "soft-radial":
+          "radial-gradient(ellipse at top, hsl(var(--primary) / 0.18), transparent 65%)",
+        "card-gradient":
+          "linear-gradient(135deg, rgba(59, 130, 246, 0.18) 0%, rgba(14, 165, 233, 0.08) 48%, rgba(59, 130, 246, 0.05) 100%)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -109,7 +118,7 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         highlight: "highlight 3s ease-in-out",
       },
-    }
+    },
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;

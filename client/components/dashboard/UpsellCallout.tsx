@@ -16,7 +16,9 @@ const UpsellCallout = ({ user, onSelect }: UpsellCalloutProps) => {
       <div className="md:max-w-xl">
         <div className="flex items-center gap-2 text-primary">
           <Sparkles className="h-4 w-4" />
-          <span className="text-xs font-semibold uppercase tracking-widest">AI spotlight</span>
+          <span className="text-xs font-semibold uppercase tracking-widest">
+            AI spotlight
+          </span>
         </div>
         <h3 className="mt-3 text-xl font-semibold text-foreground md:text-2xl">
           {user.name} shows a {user.upsellScore}/10 upsell potential
@@ -25,14 +27,21 @@ const UpsellCallout = ({ user, onSelect }: UpsellCalloutProps) => {
           {user.narrative}
         </p>
         <div className="mt-4 flex flex-wrap items-center gap-3 text-sm">
-          <Badge variant="outline" className="rounded-full border-primary/30 bg-white/50 text-primary">
+          <Badge
+            variant="outline"
+            className="rounded-full border-primary/30 bg-white/50 text-primary"
+          >
             {user.plan} → {user.preferredUpgrade}
           </Badge>
-          <Badge variant="secondary" className="rounded-full bg-primary/15 text-primary">
+          <Badge
+            variant="secondary"
+            className="rounded-full bg-primary/15 text-primary"
+          >
             Top feature: {user.features[0]?.name}
           </Badge>
           <span className="inline-flex items-center gap-1 rounded-full bg-white/40 px-3 py-1 text-xs font-medium text-primary">
-            <TrendingUp className="h-3.5 w-3.5" /> {Math.round(user.metrics.aiAssistUsage * 100)}% AI usage
+            <TrendingUp className="h-3.5 w-3.5" />{" "}
+            {Math.round(user.metrics.aiAssistUsage * 100)}% AI usage
           </span>
         </div>
       </div>

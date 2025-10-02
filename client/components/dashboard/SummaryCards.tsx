@@ -1,4 +1,10 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
@@ -49,7 +55,10 @@ const SummaryCards = ({ snapshot }: SummaryCardsProps) => {
       label: "Users to Upsell",
       value: snapshot.upsellCandidates,
       secondary: `${snapshot.premiumReady} high intent this week`,
-      progress: Math.min(100, (snapshot.upsellCandidates / snapshot.totalUsers) * 100),
+      progress: Math.min(
+        100,
+        (snapshot.upsellCandidates / snapshot.totalUsers) * 100,
+      ),
       ...cardThemes[1],
     },
     {
@@ -66,18 +75,29 @@ const SummaryCards = ({ snapshot }: SummaryCardsProps) => {
       {cards.map((card) => {
         const Icon = card.icon;
         return (
-          <Card key={card.label} className={cn("relative overflow-hidden border-border/60 bg-card/90 shadow-subtle", card.accent)}>
+          <Card
+            key={card.label}
+            className={cn(
+              "relative overflow-hidden border-border/60 bg-card/90 shadow-subtle",
+              card.accent,
+            )}
+          >
             <CardHeader className="space-y-6 pb-4">
               <div className="flex items-center justify-between">
                 <div className="rounded-2xl bg-primary/10 p-3 text-primary">
                   <Icon className="h-5 w-5" />
                 </div>
-                <Badge variant="outline" className="rounded-full border-primary/30 bg-primary/10 text-xs font-medium text-primary">
+                <Badge
+                  variant="outline"
+                  className="rounded-full border-primary/30 bg-primary/10 text-xs font-medium text-primary"
+                >
                   {card.footerLabel}
                 </Badge>
               </div>
               <div>
-                <CardTitle className="text-3xl font-semibold tracking-tight">{card.value}</CardTitle>
+                <CardTitle className="text-3xl font-semibold tracking-tight">
+                  {card.value}
+                </CardTitle>
                 <CardDescription className="mt-1 text-sm text-muted-foreground/90">
                   {card.label}
                 </CardDescription>
@@ -85,7 +105,10 @@ const SummaryCards = ({ snapshot }: SummaryCardsProps) => {
             </CardHeader>
             <CardContent className="pt-0">
               <p className="text-sm text-muted-foreground">{card.secondary}</p>
-              <Progress value={card.progress} className="mt-4 h-2 rounded-full bg-muted/60" />
+              <Progress
+                value={card.progress}
+                className="mt-4 h-2 rounded-full bg-muted/60"
+              />
             </CardContent>
           </Card>
         );

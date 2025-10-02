@@ -48,7 +48,11 @@ const metricConfig = [
   },
 ] as const;
 
-const UserDetailModal = ({ user, open, onOpenChange }: UserDetailModalProps) => {
+const UserDetailModal = ({
+  user,
+  open,
+  onOpenChange,
+}: UserDetailModalProps) => {
   const [message, setMessage] = useState("");
   const [subject, setSubject] = useState("Upgrade preview & rollout plan");
 
@@ -64,12 +68,15 @@ const UserDetailModal = ({ user, open, onOpenChange }: UserDetailModalProps) => 
       const rawValue = user.metrics[metric.key];
       const ceiling = metric.ceiling ?? 1;
       const percent = Math.round(
-        Math.min(1, metric.ceiling ? rawValue / metric.ceiling : rawValue) * 100,
+        Math.min(1, metric.ceiling ? rawValue / metric.ceiling : rawValue) *
+          100,
       );
       return {
         label: metric.label,
         description: metric.description,
-        value: metric.ceiling ? `${rawValue} / ${metric.ceiling}` : `${percent}%`,
+        value: metric.ceiling
+          ? `${rawValue} / ${metric.ceiling}`
+          : `${percent}%`,
         percent,
       };
     });
@@ -107,10 +114,16 @@ const UserDetailModal = ({ user, open, onOpenChange }: UserDetailModalProps) => 
                       <Badge className="rounded-full bg-primary/15 text-primary">
                         {user.plan} → {user.preferredUpgrade}
                       </Badge>
-                      <Badge variant="outline" className="rounded-full border border-primary/30 bg-primary/10 text-primary">
+                      <Badge
+                        variant="outline"
+                        className="rounded-full border border-primary/30 bg-primary/10 text-primary"
+                      >
                         Upsell score: {user.upsellScore.toFixed(1)} / 10
                       </Badge>
-                      <Badge variant="secondary" className="rounded-full bg-muted px-3 py-1 text-muted-foreground">
+                      <Badge
+                        variant="secondary"
+                        className="rounded-full bg-muted px-3 py-1 text-muted-foreground"
+                      >
                         Last active {user.lastActive}
                       </Badge>
                     </div>
@@ -122,7 +135,9 @@ const UserDetailModal = ({ user, open, onOpenChange }: UserDetailModalProps) => 
                     <p className="mt-2 text-3xl font-semibold text-primary">
                       {user.upsellScore.toFixed(1)}
                     </p>
-                    <p className="text-xs text-primary/80">High intent segment</p>
+                    <p className="text-xs text-primary/80">
+                      High intent segment
+                    </p>
                   </div>
                 </div>
                 <div className="grid gap-4 rounded-2xl border border-border/70 bg-white/70 p-5 md:grid-cols-2">
@@ -133,13 +148,18 @@ const UserDetailModal = ({ user, open, onOpenChange }: UserDetailModalProps) => 
                           <p className="text-sm font-semibold text-foreground">
                             {metric.label}
                           </p>
-                          <p className="text-xs text-muted-foreground">{metric.description}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {metric.description}
+                          </p>
                         </div>
                         <span className="text-xs font-medium text-muted-foreground">
                           {metric.value}
                         </span>
                       </div>
-                      <Progress value={metric.percent} className="h-1.5 rounded-full" />
+                      <Progress
+                        value={metric.percent}
+                        className="h-1.5 rounded-full"
+                      />
                     </div>
                   ))}
                 </div>
@@ -161,7 +181,9 @@ const UserDetailModal = ({ user, open, onOpenChange }: UserDetailModalProps) => 
                       </span>
                     ))}
                   </div>
-                  <p className="mt-4 text-sm text-muted-foreground">{user.narrative}</p>
+                  <p className="mt-4 text-sm text-muted-foreground">
+                    {user.narrative}
+                  </p>
                 </div>
                 <form className="space-y-4" onSubmit={handleSend}>
                   <div>
@@ -203,7 +225,9 @@ const UserDetailModal = ({ user, open, onOpenChange }: UserDetailModalProps) => 
                           }
                           navigator.clipboard
                             .writeText(message)
-                            .then(() => toast.success("Message copied to clipboard"))
+                            .then(() =>
+                              toast.success("Message copied to clipboard"),
+                            )
                             .catch(() => toast.error("Unable to copy message"));
                         }}
                       >
@@ -226,7 +250,11 @@ const UserDetailModal = ({ user, open, onOpenChange }: UserDetailModalProps) => 
         </ScrollArea>
         <Separator className="border-border/60" />
         <div className="flex justify-end gap-2 px-6 py-4">
-          <Button variant="ghost" className="rounded-xl" onClick={() => onOpenChange(false)}>
+          <Button
+            variant="ghost"
+            className="rounded-xl"
+            onClick={() => onOpenChange(false)}
+          >
             Close
           </Button>
         </div>

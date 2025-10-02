@@ -7,7 +7,13 @@ import UserDetailModal from "@/components/dashboard/UserDetailModal";
 import UserTable from "@/components/dashboard/UserTable";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { upsellUsers } from "@/data/users";
 import {
   attachUpsellScore,
@@ -22,14 +28,21 @@ const DashboardPage = () => {
   const users = useMemo(() => attachUpsellScore(upsellUsers), []);
   const summary = useMemo(() => getSummarySnapshot(users), [users]);
   const hotTargets = useMemo(() => getHotUpsellTargets(users), [users]);
-  const [selectedUser, setSelectedUser] = useState<UpsellUserWithScore | null>(null);
+  const [selectedUser, setSelectedUser] = useState<UpsellUserWithScore | null>(
+    null,
+  );
 
   const headerSlot = useMemo(() => {
-    const hotNames = hotTargets.slice(0, 3).map((user) => user.name.split(" ")[0]);
+    const hotNames = hotTargets
+      .slice(0, 3)
+      .map((user) => user.name.split(" ")[0]);
     return (
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border/70 bg-white/70 px-4 py-3">
         <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-          <Badge variant="outline" className="rounded-full border-primary/30 bg-primary/10 text-primary">
+          <Badge
+            variant="outline"
+            className="rounded-full border-primary/30 bg-primary/10 text-primary"
+          >
             Hot leads this week
           </Badge>
           <span className="text-muted-foreground">
@@ -69,7 +82,8 @@ const DashboardPage = () => {
                 This week's upsell rituals
               </CardTitle>
               <CardDescription>
-                Stay focused on high-impact sequences to convert premium upgrades.
+                Stay focused on high-impact sequences to convert premium
+                upgrades.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4 text-sm text-muted-foreground">
@@ -79,13 +93,15 @@ const DashboardPage = () => {
               <div className="rounded-2xl border border-border/80 bg-white/80 p-4">
                 <p className="font-medium text-foreground">AI Outreach</p>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Send upgrade previews to {hotTargets.length} high-intent users using the personalized script.
+                  Send upgrade previews to {hotTargets.length} high-intent users
+                  using the personalized script.
                 </p>
               </div>
               <div className="rounded-2xl border border-border/80 bg-white/80 p-4">
                 <p className="font-medium text-foreground">Feature Focus</p>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Promote AI Assist and Usage Insights paths—they lead adoption for premium upsells.
+                  Promote AI Assist and Usage Insights paths—they lead adoption
+                  for premium upsells.
                 </p>
               </div>
             </CardContent>

@@ -1,5 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import AppLayout from "@/layouts/AppLayout";
 import { ShieldCheck } from "lucide-react";
@@ -23,13 +29,19 @@ const Settings = () => {
               <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                 Workspace name
               </label>
-              <Input className="mt-2 h-11 rounded-xl border-border/60 bg-white/80" defaultValue="Upsell IQ" />
+              <Input
+                className="mt-2 h-11 rounded-xl border-border/60 bg-white/80"
+                defaultValue="Upsell IQ"
+              />
             </div>
             <div>
               <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                 Support email
               </label>
-              <Input className="mt-2 h-11 rounded-xl border-border/60 bg-white/80" defaultValue="success@upselliq.com" />
+              <Input
+                className="mt-2 h-11 rounded-xl border-border/60 bg-white/80"
+                defaultValue="success@upselliq.com"
+              />
             </div>
             <Button className="rounded-xl bg-primary text-primary-foreground shadow-glow-sm hover:bg-primary/90">
               Save settings
@@ -43,11 +55,13 @@ const Settings = () => {
               <CardTitle className="text-lg">Security & compliance</CardTitle>
             </div>
             <CardDescription>
-              Configure role-based access, audit logs, and AI guardrails once your policies are ready.
+              Configure role-based access, audit logs, and AI guardrails once
+              your policies are ready.
             </CardDescription>
           </CardHeader>
           <CardContent className="text-sm text-muted-foreground">
-            Provide your requirements and Fusion can build this out when you are ready.
+            Provide your requirements and Fusion can build this out when you are
+            ready.
           </CardContent>
         </Card>
       </div>
