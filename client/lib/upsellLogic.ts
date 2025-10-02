@@ -6,13 +6,13 @@ export type UpsellUserWithScore = UpsellUser & {
   featureAdoptionRate: number;
 };
 
-const planLiftMap: Record<UpSellPlanKey, number> = {
+type UpsellPlanKey = UpsellUser["plan"];
+
+const planLiftMap: Record<UpsellPlanKey, number> = {
   Free: 1.32,
   Basic: 1.12,
   Premium: 0.92,
 };
-
-type UpSellPlanKey = UpsellUser["plan"];
 
 const normalize = (value: number, ceiling: number) => {
   if (ceiling <= 0) return 0;
