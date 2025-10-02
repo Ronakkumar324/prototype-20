@@ -58,6 +58,18 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
       },
+      fontFamily: {
+        sans: ["Inter", "ui-sans-serif", "system-ui", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+      },
+      boxShadow: {
+        subtle: "0 18px 38px -24px rgba(15, 23, 42, 0.25)",
+        "glow-sm": "0 12px 32px -18px rgba(37, 99, 235, 0.35)",
+        "glow-md": "0 28px 60px -30px rgba(59, 130, 246, 0.5)",
+      },
+      backgroundImage: {
+        "soft-radial": "radial-gradient(ellipse at top, hsl(var(--primary) / 0.18), transparent 65%)",
+        "card-gradient": "linear-gradient(135deg, rgba(59, 130, 246, 0.18) 0%, rgba(14, 165, 233, 0.08) 48%, rgba(59, 130, 246, 0.05) 100%)",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -80,12 +92,24 @@ export default {
             height: "0",
           },
         },
+        highlight: {
+          from: {
+            backgroundColor: "transparent",
+          },
+          "45%": {
+            backgroundColor: "hsl(var(--accent) / 0.28)",
+          },
+          to: {
+            backgroundColor: "transparent",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        highlight: "highlight 3s ease-in-out",
       },
-    },
+    }
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
