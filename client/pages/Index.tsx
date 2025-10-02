@@ -1,62 +1,109 @@
-import { DemoResponse } from "@shared/api";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 
-export default function Index() {
-  const [exampleFromServer, setExampleFromServer] = useState("");
-  // Fetch users on component mount
-  useEffect(() => {
-    fetchDemo();
-  }, []);
+import FeatureAdoptionChart from "@/components/dashboard/FeatureAdoptionChart";
+import SummaryCards from "@/components/dashboard/SummaryCards";
+import UpsellCallout from "@/components/dashboard/UpsellCallout";
+import UserDetailModal from "@/components/dashboard/UserDetailModal";
+import UserTable from "@/components/dashboard/UserTable";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { upsellUsers } from "@/data/users";
+import {
+  attachUpsellScore,
+  getHotUpsellTargets,
+  getSummarySnapshot,
+  UpsellUserWithScore,
+} from "@/lib/upsellLogic";
+import AppLayout from "@/layouts/AppLayout";
+import { ArrowUpRight, CalendarDays, Sparkle } from "lucide-react";
 
-  // Example of how to fetch data from the server (if needed)
-  const fetchDemo = async () => {
-    try {
-      const response = await fetch("/api/demo");
-      const data = (await response.json()) as DemoResponse;
-      setExampleFromServer(data.message);
-    } catch (error) {
-      console.error("Error fetching hello:", error);
-    }
-  };
+const DashboardPage = () => {
+  const users = useMemo(() => attachUpsellScore(upsellUsers), []);
+  const summary = useMemo(() => getSummarySnapshot(users), [users]);
+  const hotTargets = useMemo(() => getHotUpsellTargets(users), [users]);
+  const [selectedUser, setSelectedUser] = useState<UpsellUserWithScore | null>(null);
+
+  const headerSlot = useMemo(() => {
+    const hotNames = hotTargets.slice(0, 3).map((user) => user.name.split(" ")[0]);
+    return (
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border/70 bg-white/70 px-4 py-3">
+        <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+          <Badge variant="outline" className="rounded-full border-primary/30 bg-primary/10 text-primary">
+            Hot leads this week
+          </Badge>
+          <span className="text-muted-foreground">
+            {hotNames.length > 0 ? hotNames.join(", ") : "No hot leads yet"}
+          </span>
+        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          className="rounded-xl border border-primary/30 bg-primary/10 text-primary hover:bg-primary/20"
+          onClick={() => {
+            if (hotTargets.length > 0) setSelectedUser(hotTargets[0]);
+          }}
+        >
+          View AI outreach deck
+          <ArrowUpRight className="ml-2 h-4 w-4" />
+        </Button>
+      </div>
+    );
+  }, [hotTargets]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-      <div className="text-center">
-        {/* TODO: FUSION_GENERATION_APP_PLACEHOLDER replace everything here with the actual app! */}
-        <h1 className="text-2xl font-semibold text-slate-800 flex items-center justify-center gap-3">
-          <svg
-            className="animate-spin h-8 w-8 text-slate-400"
-            viewBox="0 0 50 50"
-          >
-            <circle
-              className="opacity-30"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-            />
-            <circle
-              className="text-slate-600"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-              strokeDasharray="100"
-              strokeDashoffset="75"
-            />
-          </svg>
-          Generating your app...
-        </h1>
-        <p className="mt-4 text-slate-600 max-w-md">
-          Watch the chat on the left for updates that might need your attention
-          to finish generating
-        </p>
-        <p className="mt-4 hidden max-w-md">{exampleFromServer}</p>
+    <AppLayout
+      title="Upsell Opportunity Command Center"
+      description="Monitor usage signals, surface the right customers, and launch targeted upgrade plays."
+      headerSlot={headerSlot}
+    >
+      <div className="space-y-8">
+        <UpsellCallout user={hotTargets[0]} onSelect={setSelectedUser} />
+        <SummaryCards snapshot={summary} />
+        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
+          <FeatureAdoptionChart users={users} />
+          <Card className="glass-panel">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-primary">
+                <CalendarDays className="h-5 w-5" />
+                This week's upsell rituals
+              </CardTitle>
+              <CardDescription>
+                Stay focused on high-impact sequences to convert premium upgrades.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4 text-sm text-muted-foreground">
+              <div className="rounded-2xl border border-primary/20 bg-primary/10 p-4 text-primary">
+                Launch a concierge onboarding review for premium-ready accounts.
+              </div>
+              <div className="rounded-2xl border border-border/80 bg-white/80 p-4">
+                <p className="font-medium text-foreground">AI Outreach</p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Send upgrade previews to {hotTargets.length} high-intent users using the personalized script.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-border/80 bg-white/80 p-4">
+                <p className="font-medium text-foreground">Feature Focus</p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Promote AI Assist and Usage Insights paths—they lead adoption for premium upsells.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+        <UserTable users={users} onSelect={setSelectedUser} />
       </div>
-    </div>
+      <UserDetailModal
+        user={selectedUser}
+        open={Boolean(selectedUser)}
+        onOpenChange={(open) => {
+          if (!open) {
+            setSelectedUser(null);
+          }
+        }}
+      />
+    </AppLayout>
   );
-}
+};
+
+export default DashboardPage;
