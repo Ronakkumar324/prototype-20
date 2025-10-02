@@ -16,7 +16,7 @@ import {
   UpsellUserWithScore,
 } from "@/lib/upsellLogic";
 import AppLayout from "@/layouts/AppLayout";
-import { ArrowUpRight, CalendarDays, Sparkle } from "lucide-react";
+import { ArrowUpRight, CalendarDays } from "lucide-react";
 
 const DashboardPage = () => {
   const users = useMemo(() => attachUpsellScore(upsellUsers), []);
