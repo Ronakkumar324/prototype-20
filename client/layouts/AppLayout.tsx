@@ -61,6 +61,8 @@ type SidebarContentProps = {
   collapsed?: boolean;
   onNavigate?: () => void;
   onToggleCollapse?: () => void;
+  onLaunchPlaybook?: () => void;
+  onBrandClick?: () => void;
 };
 
 const SidebarContent = ({
