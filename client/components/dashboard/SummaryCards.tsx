@@ -48,7 +48,7 @@ const SummaryCards = ({ snapshot }: SummaryCardsProps) => {
       label: "Total Users",
       value: snapshot.totalUsers,
       secondary: `${snapshot.totalUsers - snapshot.premiumReady} active leaders`,
-      progress: Math.min(100, snapshot.totalUsers * 12),
+      progress: Math.min(100, snapshot.totalUsers * 9),
       ...cardThemes[0],
     },
     {
