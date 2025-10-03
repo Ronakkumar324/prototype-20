@@ -7,6 +7,7 @@ import {
   ChevronsRight,
   LayoutDashboard,
   LineChart,
+  Mail,
   Menu,
   Search,
   Settings,
