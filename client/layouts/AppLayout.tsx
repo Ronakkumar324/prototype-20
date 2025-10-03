@@ -211,10 +211,10 @@ const AppLayout = ({ title, description, children, headerSlot }: AppLayoutProps)
   }, [location.pathname]);
 
   return (
-    <div className="bg-soft-radial text-foreground lg:flex lg:h-screen">
+    <div className="bg-soft-radial text-foreground lg:flex lg:min-h-screen lg:items-stretch">
       <aside
         className={cn(
-          "relative hidden h-full shrink-0 flex-col overflow-hidden rounded-r-[28px] border-r border-white/5 bg-sidebar text-sidebar-foreground shadow-glow-md transition-[width] duration-300 ease-in-out lg:flex",
+          "hidden shrink-0 flex-col overflow-hidden rounded-r-[28px] border-r border-white/5 bg-sidebar text-sidebar-foreground shadow-glow-md transition-[width] duration-300 ease-in-out lg:flex lg:sticky lg:top-0 lg:h-screen",
           collapsed ? "w-[96px]" : "w-[288px]",
         )}
       >
@@ -224,8 +224,8 @@ const AppLayout = ({ title, description, children, headerSlot }: AppLayoutProps)
         />
       </aside>
       <MobileSidebar open={mobileOpen} onOpenChange={setMobileOpen} />
-      <div className="flex min-h-screen flex-1 flex-col overflow-hidden lg:h-screen">
-        <header className="sticky top-0 z-40 border-b border-border/60 bg-card/80 backdrop-blur-2xl">
+      <div className="flex flex-1 flex-col lg:min-h-screen">
+        <header className="z-40 border-b border-border/60 bg-card/80 backdrop-blur-2xl">
           <div className="mx-auto flex w-full max-w-[1400px] flex-col gap-4 px-4 py-4 md:px-8">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
@@ -289,7 +289,7 @@ const AppLayout = ({ title, description, children, headerSlot }: AppLayoutProps)
             {headerSlot}
           </div>
         </header>
-        <main className="flex-1 overflow-y-auto px-4 pb-10 pt-6 md:px-8 md:pt-8">
+        <main className="flex-1 px-4 pb-10 pt-6 md:px-8 md:pt-8">
           <div className="mx-auto w-full max-w-[1400px]">{children}</div>
         </main>
       </div>
