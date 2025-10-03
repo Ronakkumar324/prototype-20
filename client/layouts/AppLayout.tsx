@@ -70,6 +70,8 @@ const SidebarContent = ({
   collapsed = false,
   onNavigate,
   onToggleCollapse,
+  onLaunchPlaybook,
+  onBrandClick,
 }: SidebarContentProps) => {
   return (
     <div
@@ -79,10 +81,15 @@ const SidebarContent = ({
       )}
       data-collapsed={collapsed}
     >
-      <div
+      <NavLink
+        to="/"
+        onClick={() => {
+          onBrandClick?.();
+          onNavigate?.();
+        }}
         className={cn(
-          "flex items-center gap-3 pb-6 pt-8",
-          collapsed ? "justify-center" : "px-6",
+          "flex items-center gap-3 pb-6 pt-8 text-white transition",
+          collapsed ? "justify-center" : "px-6 hover:opacity-90",
         )}
       >
         <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10 text-white shadow-glow-sm">
@@ -96,7 +103,7 @@ const SidebarContent = ({
             <h2 className="text-lg font-semibold text-white">Admin Studio</h2>
           </div>
         ) : null}
-      </div>
+      </NavLink>
       {onToggleCollapse ? (
         <div className={cn("pb-4", collapsed ? "flex justify-center" : "px-6")}>
           <Button
