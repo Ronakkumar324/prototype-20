@@ -185,26 +185,36 @@ const SidebarContent = ({
         </nav>
         <div
           className={cn(
-            "mt-8 space-y-3 rounded-2xl border border-white/8 bg-white/5 p-4 text-sm",
+            "mt-8 space-y-3 rounded-2xl border border-white/12 bg-white/10 p-4 text-sm text-white shadow-subtle",
             collapsed ? "hidden" : "block text-left",
           )}
         >
-          <div className="flex items-center gap-2 text-white/80">
-            <Mail className="h-4 w-4" />
-            {!collapsed ? <p className="font-semibold">Contact us</p> : null}
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 text-white/90">
+              <Mail className="h-4 w-4" />
+              <p className="text-sm font-semibold">Need a hand?</p>
+            </div>
+            <span className="rounded-full bg-white/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/80">
+              Contact
+            </span>
           </div>
-          <ul className="space-y-1 text-xs text-white/70">
+          <p className="text-xs text-white/70">
+            Reach out to our team for rollout support or to escalate enterprise upgrades.
+          </p>
+          <div className="grid gap-2 text-xs">
             {contactEmails.map((email) => (
-              <li key={email}>
-                <a
-                  href={`mailto:${email}`}
-                  className="transition hover:text-white"
-                >
-                  {email}
-                </a>
-              </li>
+              <a
+                key={email}
+                href={`mailto:${email}`}
+                className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-3 py-2 transition hover:border-white/25 hover:bg-white/10"
+              >
+                <span>{email}</span>
+                <span className="text-[10px] uppercase tracking-[0.18em] text-white/60">
+                  Email
+                </span>
+              </a>
             ))}
-          </ul>
+          </div>
         </div>
       </ScrollArea>
       {!collapsed ? (
