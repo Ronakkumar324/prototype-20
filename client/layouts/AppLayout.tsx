@@ -58,10 +58,7 @@ const navItems: NavItem[] = [
   { label: "Settings", href: "/settings", icon: Settings },
 ];
 
-const contactEmails = [
-  "ronakbhambu525@gmail.com",
-  "renatimitesh@gmail.com",
-];
+const contactEmails = ["ronakbhambu525@gmail.com", "renatimitesh@gmail.com"];
 
 type SidebarContentProps = {
   collapsed?: boolean;
@@ -199,7 +196,8 @@ const SidebarContent = ({
             </span>
           </div>
           <p className="text-xs text-white/70">
-            Reach out to our team for rollout support or to escalate enterprise upgrades.
+            Reach out to our team for rollout support or to escalate enterprise
+            upgrades.
           </p>
           <div className="grid gap-2 text-xs">
             {contactEmails.map((email) => (
@@ -283,7 +281,12 @@ const MobileSidebar = ({
 
 type ActiveModal = "notifications" | "invite" | "profile" | "playbook" | null;
 
-const AppLayout = ({ title, description, children, headerSlot }: AppLayoutProps) => {
+const AppLayout = ({
+  title,
+  description,
+  children,
+  headerSlot,
+}: AppLayoutProps) => {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
@@ -365,7 +368,9 @@ const AppLayout = ({ title, description, children, headerSlot }: AppLayoutProps)
                     {title}
                   </h1>
                   {description ? (
-                    <p className="text-sm text-muted-foreground">{description}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {description}
+                    </p>
                   ) : null}
                 </div>
               </div>
@@ -558,8 +563,9 @@ const AppLayout = ({ title, description, children, headerSlot }: AppLayoutProps)
           </DialogHeader>
           <form className="space-y-4" onSubmit={handlePlaybookSubmit}>
             <p className="text-sm text-muted-foreground">
-              Share the scenario you want to accelerate. We will combine AI-based
-              scoring with lifecycle nudges to deliver the upgrade sequence.
+              Share the scenario you want to accelerate. We will combine
+              AI-based scoring with lifecycle nudges to deliver the upgrade
+              sequence.
             </p>
             <div className="space-y-2">
               <Label htmlFor="playbook-notes">Campaign notes</Label>
