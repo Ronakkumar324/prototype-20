@@ -186,7 +186,7 @@ const SidebarContent = ({
         <div
           className={cn(
             "mt-8 space-y-3 rounded-2xl border border-white/8 bg-white/5 p-4 text-sm",
-            collapsed ? "text-center" : "text-left",
+            collapsed ? "hidden" : "block text-left",
           )}
         >
           <div className="flex items-center gap-2 text-white/80">
