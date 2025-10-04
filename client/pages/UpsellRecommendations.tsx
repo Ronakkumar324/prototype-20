@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -6,10 +8,28 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import AppLayout from "@/layouts/AppLayout";
 import { BrainCircuit, Send } from "lucide-react";
+import { toast } from "sonner";
 
 const UpsellRecommendations = () => {
+  const [email, setEmail] = useState("");
+  const [requirements, setRequirements] = useState("");
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!email.trim() || !requirements.trim()) {
+      toast.error("Add your email and requirements to continue.");
+      return;
+    }
+    toast.success("Thanks! Your upsell requirements have been shared with Fusion.");
+    setEmail("");
+    setRequirements("");
+  };
+
   return (
     <AppLayout
       title="AI Upsell Recommendations"
@@ -34,14 +54,41 @@ const UpsellRecommendations = () => {
               would like to automate. Fusion can then build the full
               recommendation engine when you are ready.
             </p>
-            <Button
-              size="lg"
-              variant="outline"
-              className="rounded-xl border-primary/40 bg-white/80 text-primary hover:bg-white"
-            >
-              <Send className="mr-2 h-4 w-4" />
-              Share requirements with Fusion
-            </Button>
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              <div className="space-y-2">
+                <Label htmlFor="requirements-email">Contact email</Label>
+                <Input
+                  id="requirements-email"
+                  type="email"
+                  placeholder="you@company.com"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  className="h-11 rounded-xl border-border/60"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="requirements-notes">Requirement details</Label>
+                <Textarea
+                  id="requirements-notes"
+                  placeholder="Outline the upgrade journey, key segments, success metrics, and timing."
+                  value={requirements}
+                  onChange={(event) => setRequirements(event.target.value)}
+                  rows={4}
+                  className="rounded-2xl border-border/60"
+                  required
+                />
+              </div>
+              <Button
+                size="lg"
+                type="submit"
+                variant="outline"
+                className="rounded-xl border-primary/40 bg-white/80 text-primary hover:bg-white"
+              >
+                <Send className="mr-2 h-4 w-4" />
+                Share requirements with Fusion
+              </Button>
+            </form>
           </CardContent>
         </Card>
         <Card className="glass-panel">
