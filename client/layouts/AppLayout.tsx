@@ -324,7 +324,6 @@ const AppLayout = ({ title, description, children, headerSlot }: AppLayoutProps)
       >
         <SidebarContent
           collapsed={collapsed}
-          onNavigate={() => setCollapsed(false)}
           onToggleCollapse={() => setCollapsed((prev) => !prev)}
           onLaunchPlaybook={() => setActiveModal("playbook")}
         />
