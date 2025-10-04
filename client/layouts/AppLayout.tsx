@@ -58,12 +58,16 @@ const navItems: NavItem[] = [
   { label: "Settings", href: "/settings", icon: Settings },
 ];
 
+const contactEmails = [
+  "ronakbhambu525@gmail.com",
+  "renatimitesh@gmail.com",
+];
+
 type SidebarContentProps = {
   collapsed?: boolean;
   onNavigate?: () => void;
   onToggleCollapse?: () => void;
   onLaunchPlaybook?: () => void;
-  onBrandClick?: () => void;
 };
 
 const SidebarContent = ({
@@ -71,7 +75,6 @@ const SidebarContent = ({
   onNavigate,
   onToggleCollapse,
   onLaunchPlaybook,
-  onBrandClick,
 }: SidebarContentProps) => {
   return (
     <div
@@ -83,10 +86,7 @@ const SidebarContent = ({
     >
       <NavLink
         to="/"
-        onClick={() => {
-          onBrandClick?.();
-          onNavigate?.();
-        }}
+        onClick={onNavigate}
         className={cn(
           "flex items-center gap-3 pb-6 pt-8 text-white transition",
           collapsed ? "justify-center" : "px-6 hover:opacity-90",
@@ -183,6 +183,29 @@ const SidebarContent = ({
             );
           })}
         </nav>
+        <div
+          className={cn(
+            "mt-8 space-y-3 rounded-2xl border border-white/8 bg-white/5 p-4 text-sm",
+            collapsed ? "text-center" : "text-left",
+          )}
+        >
+          <div className="flex items-center gap-2 text-white/80">
+            <Mail className="h-4 w-4" />
+            {!collapsed ? <p className="font-semibold">Contact us</p> : null}
+          </div>
+          <ul className="space-y-1 text-xs text-white/70">
+            {contactEmails.map((email) => (
+              <li key={email}>
+                <a
+                  href={`mailto:${email}`}
+                  className="transition hover:text-white"
+                >
+                  {email}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </ScrollArea>
       {!collapsed ? (
         <div className="mt-auto space-y-3 px-6 pb-8">
@@ -195,7 +218,7 @@ const SidebarContent = ({
             <Button
               variant="secondary"
               size="sm"
-              onClick={onNavigate}
+              onClick={onLaunchPlaybook}
               className="mt-4 w-full justify-center rounded-lg bg-white/20 text-white hover:bg-white/30"
             >
               Launch Upsell Flow
@@ -211,7 +234,7 @@ const SidebarContent = ({
             variant="ghost"
             size="icon"
             className="h-9 w-9 rounded-xl border border-white/10 bg-white/10 text-white hover:bg-white/20"
-            onClick={onNavigate}
+            onClick={onLaunchPlaybook}
           >
             <Sparkles className="h-4 w-4" />
             <span className="sr-only">Launch Upsell Flow</span>
@@ -228,9 +251,11 @@ const SidebarContent = ({
 const MobileSidebar = ({
   open,
   onOpenChange,
+  onLaunchPlaybook,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onLaunchPlaybook: () => void;
 }) => (
   <Sheet open={open} onOpenChange={onOpenChange}>
     <SheetContent
@@ -240,20 +265,21 @@ const MobileSidebar = ({
       <SidebarContent
         collapsed={false}
         onNavigate={() => onOpenChange(false)}
+        onLaunchPlaybook={onLaunchPlaybook}
       />
     </SheetContent>
   </Sheet>
 );
 
-const AppLayout = ({
-  title,
-  description,
-  children,
-  headerSlot,
-}: AppLayoutProps) => {
+type ActiveModal = "notifications" | "invite" | "profile" | "playbook" | null;
+
+const AppLayout = ({ title, description, children, headerSlot }: AppLayoutProps) => {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+  const [activeModal, setActiveModal] = useState<ActiveModal>(null);
+  const [inviteEmail, setInviteEmail] = useState("");
+  const [playbookNotes, setPlaybookNotes] = useState("");
 
   useEffect(() => {
     setMobileOpen(false);
@@ -263,6 +289,30 @@ const AppLayout = ({
     const current = navItems.find((item) => item.href === location.pathname);
     return current?.label ?? "Dashboard";
   }, [location.pathname]);
+
+  const closeModal = () => setActiveModal(null);
+
+  const handleInviteSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!inviteEmail.trim()) {
+      toast.error("Enter an email before sending an invite.");
+      return;
+    }
+    toast.success(`Invite sent to ${inviteEmail.trim()}`);
+    setInviteEmail("");
+    closeModal();
+  };
+
+  const handlePlaybookSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!playbookNotes.trim()) {
+      toast.error("Add notes so we can prepare your playbook.");
+      return;
+    }
+    toast.success("Playbook briefing shared with the success team.");
+    setPlaybookNotes("");
+    closeModal();
+  };
 
   return (
     <div className="bg-soft-radial text-foreground lg:flex lg:min-h-screen lg:items-stretch">
@@ -274,10 +324,16 @@ const AppLayout = ({
       >
         <SidebarContent
           collapsed={collapsed}
+          onNavigate={() => setCollapsed(false)}
           onToggleCollapse={() => setCollapsed((prev) => !prev)}
+          onLaunchPlaybook={() => setActiveModal("playbook")}
         />
       </aside>
-      <MobileSidebar open={mobileOpen} onOpenChange={setMobileOpen} />
+      <MobileSidebar
+        open={mobileOpen}
+        onOpenChange={setMobileOpen}
+        onLaunchPlaybook={() => setActiveModal("playbook")}
+      />
       <div className="flex flex-1 flex-col lg:min-h-screen">
         <header className="z-40 border-b border-border/60 bg-card/80 backdrop-blur-2xl">
           <div className="mx-auto flex w-full max-w-[1400px] flex-col gap-4 px-4 py-4 md:px-8">
@@ -300,9 +356,7 @@ const AppLayout = ({
                     {title}
                   </h1>
                   {description ? (
-                    <p className="text-sm text-muted-foreground">
-                      {description}
-                    </p>
+                    <p className="text-sm text-muted-foreground">{description}</p>
                   ) : null}
                 </div>
               </div>
@@ -311,6 +365,7 @@ const AppLayout = ({
                   variant="ghost"
                   size="icon"
                   className="hidden h-10 w-10 rounded-xl border border-border/60 bg-muted/40 text-muted-foreground shadow-sm transition hover:text-primary md:inline-flex"
+                  onClick={() => setActiveModal("notifications")}
                 >
                   <Bell className="h-5 w-5" />
                   <span className="sr-only">Notifications</span>
@@ -327,16 +382,24 @@ const AppLayout = ({
                     variant="outline"
                     size="sm"
                     className="rounded-lg border-border/80 bg-white/60 shadow-sm hover:bg-white"
+                    onClick={() => setActiveModal("invite")}
                   >
                     <Users className="mr-2 h-4 w-4" />
                     Invite team
                   </Button>
                 </div>
-                <Avatar className="hidden h-10 w-10 rounded-xl md:block">
-                  <AvatarFallback className="bg-primary/10 text-primary">
-                    AB
-                  </AvatarFallback>
-                </Avatar>
+                <button
+                  type="button"
+                  onClick={() => setActiveModal("profile")}
+                  className="hidden rounded-xl border border-transparent transition hover:border-primary/30 md:block"
+                >
+                  <Avatar className="h-10 w-10 rounded-xl">
+                    <AvatarFallback className="bg-primary/10 text-primary">
+                      AB
+                    </AvatarFallback>
+                  </Avatar>
+                  <span className="sr-only">Open profile preferences</span>
+                </button>
               </div>
             </div>
             <div className="flex w-full items-center gap-3 md:hidden">
@@ -351,6 +414,7 @@ const AppLayout = ({
                 variant="outline"
                 size="icon"
                 className="h-10 w-10 rounded-xl border-border/80 bg-white/80 shadow-sm"
+                onClick={() => setActiveModal("notifications")}
               >
                 <Bell className="h-5 w-5 text-primary" />
                 <span className="sr-only">Notifications</span>
@@ -363,6 +427,162 @@ const AppLayout = ({
           <div className="mx-auto w-full max-w-[1400px]">{children}</div>
         </main>
       </div>
+      <Dialog
+        open={activeModal === "notifications"}
+        onOpenChange={(open) => setActiveModal(open ? "notifications" : null)}
+      >
+        <DialogContent className="max-w-md rounded-3xl border-border/60 bg-card/95">
+          <DialogHeader>
+            <DialogTitle>Notifications</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 text-sm text-muted-foreground">
+            <p>
+              You are all caught up! Configure signals to alert you when usage
+              surges and premium workflows unlock upsell moments.
+            </p>
+            <div className="rounded-xl border border-border/70 bg-muted/40 p-3">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                Suggested alerts
+              </p>
+              <ul className="mt-2 space-y-2 text-sm">
+                <li>• AI Assist usage rises above 80%</li>
+                <li>• Team seats increase by 3 or more</li>
+                <li>• Premium workflow trials initiated</li>
+              </ul>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+      <Dialog
+        open={activeModal === "invite"}
+        onOpenChange={(open) => setActiveModal(open ? "invite" : null)}
+      >
+        <DialogContent className="max-w-md rounded-3xl border-border/60 bg-card/95">
+          <DialogHeader>
+            <DialogTitle>Invite your team</DialogTitle>
+          </DialogHeader>
+          <form className="space-y-4" onSubmit={handleInviteSubmit}>
+            <div className="space-y-2">
+              <Label htmlFor="invite-email">Teammate email</Label>
+              <Input
+                id="invite-email"
+                type="email"
+                value={inviteEmail}
+                onChange={(event) => setInviteEmail(event.target.value)}
+                placeholder="name@company.com"
+                className="h-11 rounded-xl border-border/60"
+                required
+              />
+            </div>
+            <p className="text-xs text-muted-foreground">
+              We will email a secure invite with workspace access and the latest
+              upsell playbooks.
+            </p>
+            <div className="flex justify-end gap-2">
+              <Button
+                type="button"
+                variant="ghost"
+                className="rounded-xl"
+                onClick={closeModal}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                className="rounded-xl bg-primary text-primary-foreground"
+              >
+                Send invite
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
+      <Dialog
+        open={activeModal === "profile"}
+        onOpenChange={(open) => setActiveModal(open ? "profile" : null)}
+      >
+        <DialogContent className="max-w-md rounded-3xl border-border/60 bg-card/95">
+          <DialogHeader>
+            <DialogTitle>Profile & workspace</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 text-sm text-muted-foreground">
+            <div className="flex items-center gap-3">
+              <Avatar className="h-12 w-12 rounded-2xl">
+                <AvatarFallback className="bg-primary/10 text-primary">
+                  AB
+                </AvatarFallback>
+              </Avatar>
+              <div>
+                <p className="text-base font-semibold text-foreground">
+                  Avery Brooks
+                </p>
+                <p>Head of Revenue Operations</p>
+              </div>
+            </div>
+            <div className="rounded-2xl border border-border/70 bg-muted/40 p-4">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                Workspace
+              </p>
+              <p className="mt-1 text-sm text-foreground">
+                Upsell IQ · Admin Studio
+              </p>
+              <p className="text-xs">Plan: Premium (trialling Enterprise)</p>
+            </div>
+            <div className="flex justify-end">
+              <Button
+                className="rounded-xl bg-primary text-primary-foreground"
+                onClick={() => toast.success("Profile preferences saved")}
+              >
+                Manage preferences
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+      <Dialog
+        open={activeModal === "playbook"}
+        onOpenChange={(open) => setActiveModal(open ? "playbook" : null)}
+      >
+        <DialogContent className="max-w-lg rounded-3xl border-border/60 bg-card/95">
+          <DialogHeader>
+            <DialogTitle>Launch upsell playbook</DialogTitle>
+          </DialogHeader>
+          <form className="space-y-4" onSubmit={handlePlaybookSubmit}>
+            <p className="text-sm text-muted-foreground">
+              Share the scenario you want to accelerate. We will combine AI-based
+              scoring with lifecycle nudges to deliver the upgrade sequence.
+            </p>
+            <div className="space-y-2">
+              <Label htmlFor="playbook-notes">Campaign notes</Label>
+              <Textarea
+                id="playbook-notes"
+                value={playbookNotes}
+                onChange={(event) => setPlaybookNotes(event.target.value)}
+                rows={5}
+                placeholder="e.g. Target revenue leaders using AI Assist daily and offer premium concierge onboarding."
+                className="rounded-2xl border-border/60"
+                required
+              />
+            </div>
+            <div className="flex justify-end gap-2">
+              <Button
+                type="button"
+                variant="ghost"
+                className="rounded-xl"
+                onClick={closeModal}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                className="rounded-xl bg-primary text-primary-foreground"
+              >
+                Launch playbook
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
